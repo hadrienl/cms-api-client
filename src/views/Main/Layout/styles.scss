@@ -1,0 +1,21 @@
+.main-layout {
+  display: flex;
+  min-height: 100vh;
+
+  &__col {
+    padding: 1rem;
+    text-align: left;
+
+    &:not(:last-child) {
+      border-right: 1px solid grey;
+    }
+
+    &--1 {
+      max-width: 20rem;
+    }
+
+    &--2 {
+
+    }
+  }
+}
