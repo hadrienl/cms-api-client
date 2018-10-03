@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router';
 
 import { withState } from '../../services/State';
-import { getPostBy } from '../../services/posts';
+import { getPostBy, savePost } from '../../services/posts';
 import render from './render';
 
 export class Post extends React.Component {
@@ -16,15 +16,17 @@ export class Post extends React.Component {
   };
 
   componentDidMount() {
-    const { match: { params: { slug } } } = this.props;
-    this.loadPost(slug);
+    const { match: { params: { id } } } = this.props;
+    if (id !== 'new') {
+      this.loadPost(id);
+    }
   }
 
-  async loadPost(slug) {
+  async loadPost(id) {
     this.setState({
       loading: true,
     });
-    const post = await getPostBy({ slug });
+    const post = await getPostBy({ id });
 
     this.setState({
       ...post,
@@ -45,8 +47,14 @@ export class Post extends React.Component {
 
   toggleDetail = () => this.setState({ displayDetails: !this.state.displayDetails });
 
-  save = () => {
-    console.log('save', this.state);
+  save = async () => {
+    const { match: { params: { id } }, location: { pathname }, history: { replace } } = this.props;
+    const { loading, displayDetails, ...postData } = this.state;
+    const postId = await savePost(postData);
+
+    if (id !== postId) {
+      replace(pathname.replace('new', postId));
+    }
   }
 
   render() {

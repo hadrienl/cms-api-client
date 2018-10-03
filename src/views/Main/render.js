@@ -16,7 +16,7 @@ export const MainRender = ({ homeRoute, routes }) => (
     <Auth>
       <Switch>
         <Route
-          path="/posts/:slug"
+          path="/posts/:id"
           component={Loadable({
             loader: () => import('../Post'),
             loading: Loading,
