@@ -1,7 +1,9 @@
 import React from 'react';
 
-export const HomeRender = props => (
-  <p>Home</p>
+import { withState } from '../../services/State';
+
+export const HomeRender = ({ state: { connectedUser: { email } = {}, foo } }) => console.log(foo) || (
+  <p>Hello {email}</p>
 );
 
-export default HomeRender;
+export default withState(HomeRender);

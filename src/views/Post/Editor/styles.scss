@@ -1,0 +1,19 @@
+.editor {
+  display: flex;
+
+  &__input,
+  &__viewer {
+    width: 50%;
+    border: none;
+    outline: 0;
+    font-size: 1.4rem;
+    resize: none;
+    padding: 1rem;
+    min-height: calc(100vh - 2rem);
+    text-align: left;
+  }
+
+  &__viewer {
+    font-size: 1rem;
+  }
+}
