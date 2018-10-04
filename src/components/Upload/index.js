@@ -21,9 +21,9 @@ export class Upload extends React.Component {
 
     if (!file) return;
     this.setState({ loading: true });
-    const url = await uploadFile(file);
-    onUpload(url);
+    const { url, filename } = await uploadFile(file);
     this.setState({ loading: false });
+    onUpload({ url, filename });
   }
 
   render() {

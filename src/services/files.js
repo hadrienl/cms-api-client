@@ -17,7 +17,7 @@ export async function uploadFile(file) {
     path,
   });
 
-  return url;
+  return { url, filename };
 }
 
 export async function listFiles() {
