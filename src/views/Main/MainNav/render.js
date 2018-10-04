@@ -20,6 +20,12 @@ export const MainNavRender = props => (
       </li>
       <li>
         <NavLink
+          to="/files">
+          Files
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
           to="/settings">
           Settings
         </NavLink>

@@ -1,4 +1,4 @@
-import firestore, { convert } from './Firebase';
+import { firestore, convert } from './Firebase';
 import slug from 'slug';
 
 const collection = firestore.collection('posts')
