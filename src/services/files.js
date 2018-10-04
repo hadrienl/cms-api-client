@@ -1,4 +1,4 @@
-import { storage, firestore } from './Firebase';
+import { storage, firestore, convert } from './Firebase';
 import moment from 'moment';
 
 const storageRef = storage.ref();
@@ -18,4 +18,29 @@ export async function uploadFile(file) {
   });
 
   return url;
+}
+
+export async function listFiles() {
+  const querySnapshot = await collection.get();
+  const res = [];
+  querySnapshot.forEach(doc => res.push({
+    id: doc.id,
+    ...convert(doc.data())
+  }));
+
+  return Promise.all(res.map(async ref => {
+    const { url, name } = await getFile(ref.path);
+    return {
+      ...ref,
+      name,
+      url,
+    };
+  }));
+}
+
+
+export async function getFile(path) {
+  const fileRef = storageRef.child(path);
+  const url = await fileRef.getDownloadURL();
+  return { url, name: fileRef.name };
 }

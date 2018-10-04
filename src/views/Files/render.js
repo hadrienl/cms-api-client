@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Upload from '../../components/Upload';
+import List from './List';
 
 export const FilesRender = ({ uploaded }) => (
   <div>
@@ -10,6 +11,9 @@ export const FilesRender = ({ uploaded }) => (
         <Upload
           onUpload={uploaded} />
       </label>
+    </div>
+    <div>
+      <List />
     </div>
   </div>
 );
