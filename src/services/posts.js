@@ -56,8 +56,8 @@ async function createPost(data) {
 
 async function updatePost(data) {
   const { id, ...post } = data;
-  const { id: postId } = await collection.doc(id).set(cleanPost(post));
-  return postId;
+  await collection.doc(id).set(cleanPost(post));
+  return id;
 }
 
 function cleanPost (post) {
