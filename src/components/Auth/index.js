@@ -13,6 +13,7 @@ export class Auth extends React.Component {
   componentDidMount() {
     const { state: { setState } } = this.props;
     this.authListener = auth.onAuthStateChanged(user => {
+      if (this.isUnmount) return;
       this.setState({ connected: !!user });
       setState({ connectedUser: user });
     });
@@ -20,6 +21,7 @@ export class Auth extends React.Component {
 
   componentWillUnmount() {
     this.authListener();
+    this.isUnmount = true;
   }
 
   login = async ({ email, password }) => {
@@ -27,8 +29,10 @@ export class Auth extends React.Component {
 
     try {
       await auth.signInWithEmailAndPassword(email, password);
+      if (this.isUnmount) return;
       this.setState({ connected: true });
     } catch (e) {
+      if (this.isUnmount) return;
       this.setState({ error: e.code });
     }
   };

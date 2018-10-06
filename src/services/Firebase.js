@@ -7,12 +7,12 @@ global.firebase = firebase;
 export default firebase;
 
 firebase.initializeApp(config);
-export const firestore = firebase.firestore();
+export const firestore = firebase.firestore && firebase.firestore();
 const settings = { timestampsInSnapshots: true };
 firestore.settings(settings);
 
-export const storage = firebase.storage();
-export const auth = firebase.auth();
+export const storage = firebase.storage && firebase.storage();
+export const auth = firebase.auth && firebase.auth();
 
 export function convertStrings(obj) {
   for (const attr of Object.keys(obj)) {
