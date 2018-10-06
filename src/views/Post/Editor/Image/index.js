@@ -13,8 +13,8 @@ export class Image extends React.Component {
   };
 
   uploaded = ({ url, filename }) => {
-    const { alt, onUpload } = this.props;
-    onUpload({ alt, src: url, filename });
+    const { alt, onUpload, ['data-sourcepos']: position } = this.props;
+    onUpload({ alt, src: url, filename, position });
   }
 
   render() {

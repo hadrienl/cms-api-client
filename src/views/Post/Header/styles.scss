@@ -1,0 +1,32 @@
+.post-header {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+
+  &__action-back {
+    font-size: 2rem;
+    margin: 0 1rem;
+    color: inherit;
+  }
+  &__title {
+    flex: 1;
+    input {
+      height: 3rem;
+      font-size: 2.6rem;
+      margin: .2rem 0;
+      box-shadow: none;
+      background: #eee;
+      padding: .2rem;
+    }
+  }
+  &__action-details {
+    font-size: 2rem;
+    margin: 0 1rem;
+    color: inherit;
+    border: 0;
+    background: none;
+  }
+  &__action-save {
+    margin: 0 1rem 0 0;
+  }
+}

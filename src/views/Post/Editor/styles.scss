@@ -13,7 +13,15 @@
     text-align: left;
   }
 
+  &__input {
+    border-right: 1px solid lightgray;
+    font-family: 'Anonymous Pro', monospace;
+  }
+
   &__viewer {
     font-size: 1rem;
+    img {
+      max-width: 100%;
+    }
   }
 }

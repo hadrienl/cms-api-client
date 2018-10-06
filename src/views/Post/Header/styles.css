@@ -1,0 +1,25 @@
+.post-header {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid lightgray; }
+  .post-header__action-back {
+    font-size: 2rem;
+    margin: 0 1rem;
+    color: inherit; }
+  .post-header__title {
+    flex: 1; }
+    .post-header__title input {
+      height: 3rem;
+      font-size: 2.6rem;
+      margin: .2rem 0;
+      box-shadow: none;
+      background: #eee;
+      padding: .2rem; }
+  .post-header__action-details {
+    font-size: 2rem;
+    margin: 0 1rem;
+    color: inherit;
+    border: 0;
+    background: none; }
+  .post-header__action-save {
+    margin: 0 1rem 0 0; }

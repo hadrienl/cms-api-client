@@ -12,7 +12,6 @@ export class Post extends React.Component {
 
   state = {
     loading: true,
-    displayDetails: false,
   };
 
   componentDidMount() {
@@ -45,8 +44,6 @@ export class Post extends React.Component {
     }
   };
 
-  toggleDetail = () => this.setState({ displayDetails: !this.state.displayDetails });
-
   save = async () => {
     const { match: { params: { id } }, location: { pathname }, history: { replace } } = this.props;
     const { loading, displayDetails, ...postData } = this.state;
@@ -59,12 +56,11 @@ export class Post extends React.Component {
 
   render() {
     const { render: Render, ...nextProps } = this.props;
-    const { set, toggleDetail, save } = this;
+    const { set, save } = this;
     const props = {
       ...nextProps,
       ...this.state,
       set,
-      toggleDetail,
       save,
     };
 

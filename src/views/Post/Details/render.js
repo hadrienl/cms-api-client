@@ -2,8 +2,9 @@ import React from 'react';
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 import 'react-day-picker/lib/style.css';
 
-export const DetailsRender = ({ set, publishedAt, slug = '', isEvent, toggleIsEvent, eventFrom, eventTo }) => (
-  <React.Fragment>
+export const DetailsRender = ({ className, set, publishedAt, slug = '', isEvent, toggleIsEvent, eventFrom, eventTo }) => (
+  <div
+    className={className}>
     <fieldset>
       <label>
         Slug :
@@ -51,7 +52,7 @@ export const DetailsRender = ({ set, publishedAt, slug = '', isEvent, toggleIsEv
         </label>
       </React.Fragment>}
     </fieldset>
-  </React.Fragment>
+  </div>
 );
 
 export default DetailsRender;

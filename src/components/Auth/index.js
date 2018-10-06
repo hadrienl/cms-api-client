@@ -15,10 +15,6 @@ export class Auth extends React.Component {
     this.authListener = auth.onAuthStateChanged(user => {
       this.setState({ connected: !!user });
       setState({ connectedUser: user });
-      /*setState({ foo: { coin: 'coin' }});
-      setState(prevState => {
-        return { foo: {...prevState.foo, gra: 'goo'} }
-      })*/
     });
   }
 

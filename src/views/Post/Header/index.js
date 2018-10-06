@@ -1,28 +1,38 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { InputGroup } from '@blueprintjs/core';
 
-export const Header = ({ toggleDetail, title = '', set, save }) => (
-  <nav>
+import SaveButton from './SaveButton';
+import './styles.css';
+
+export const Header = ({ toggleDetail, title = '', set, save, ...props }) => (
+  <nav
+    className="post-header">
     <NavLink
       to="/posts"
-      className="button">
-      Retour
+      className="post-header__action-back button"
+      title="Back">
+      <i className="fas fa-times-circle"></i>
     </NavLink>
-    <input
+    <InputGroup
+      className="post-header__title"
       value={title}
       onChange={set('title')} />
     <button
-      className="button"
-      type="submit"
-      onClick={save}>
-      Sauvegarder
-    </button>
-    <button
-      className="button"
+      className="post-header__action-details"
       type="button"
-      onClick={toggleDetail}>
-      Détails
+      onClick={toggleDetail}
+      title="Details">
+      <i className="fas fa-info-circle"></i>
     </button>
+    <SaveButton
+      className="post-header__action-save"
+      label="Save"
+      onClick={save}
+      onSave={save}
+      onPublish={() => console.log('publish')}
+      onDelete={() => console.log('delete')}
+    />
   </nav>
 );
 

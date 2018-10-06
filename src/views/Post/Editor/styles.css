@@ -9,5 +9,10 @@
     padding: 1rem;
     min-height: calc(100vh - 2rem);
     text-align: left; }
+  .editor__input {
+    border-right: 1px solid lightgray;
+    font-family: 'Anonymous Pro', monospace; }
   .editor__viewer {
     font-size: 1rem; }
+    .editor__viewer img {
+      max-width: 100%; }
