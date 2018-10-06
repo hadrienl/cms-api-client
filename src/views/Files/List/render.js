@@ -11,7 +11,8 @@ export const ListRender = ({ loading, files }) => (
         key={id}>
         <img
           className="files-list__file"
-          src={url} />
+          src={url}
+          alt={name} />
         <figcaption>{name}</figcaption>
       </figure>
     ))}

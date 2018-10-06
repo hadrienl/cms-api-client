@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 
 import { withState } from '../../services/State';
 import { getPostBy, savePost } from '../../services/posts';
+import KeyShortcuts from '../../components/KeyShortcuts';
 import render from './render';
 
 export class Post extends React.Component {
@@ -30,6 +31,7 @@ export class Post extends React.Component {
     this.setState({
       ...post,
       loading: false,
+      saving: false,
     });
   }
 
@@ -46,17 +48,34 @@ export class Post extends React.Component {
 
   save = async () => {
     const { match: { params: { id } }, location: { pathname }, history: { replace } } = this.props;
-    const { loading, displayDetails, ...postData } = this.state;
+    const { loading, saving, displayDetails, ...postData } = this.state;
+
+    this.setState({ saving: true });
+
     const postId = await savePost(postData);
 
     if (id !== postId) {
       replace(pathname.replace('new', postId));
     }
+
+    this.setState({ saving: false });
   }
+
+  shortcuts = [{
+    meta: true,
+    key: 's',
+    callback: this.save,
+    preventDefault: true,
+  }, {
+    ctrl: true,
+    key: 's',
+    callback: this.save,
+    preventDefault: true,
+  }];
 
   render() {
     const { render: Render, ...nextProps } = this.props;
-    const { set, save } = this;
+    const { set, save, shortcuts } = this;
     const props = {
       ...nextProps,
       ...this.state,
@@ -64,7 +83,12 @@ export class Post extends React.Component {
       save,
     };
 
-    return <Render {...props} />;
+    return (
+      <KeyShortcuts
+        shortcuts={shortcuts}>
+        <Render {...props} />
+      </KeyShortcuts>
+    );
   }
 };
 

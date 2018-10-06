@@ -27,7 +27,6 @@ export class PostsList extends React.Component {
 
   render() {
     const { render: Render, state: { posts: { list = [] } = {} }, ...nextProps } = this.props;
-    console.log({list})
     const props = {
       ...nextProps,
       list,

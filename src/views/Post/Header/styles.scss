@@ -8,6 +8,7 @@
     margin: 0 1rem;
     color: inherit;
   }
+
   &__title {
     flex: 1;
     input {
@@ -19,6 +20,7 @@
       padding: .2rem;
     }
   }
+
   &__action-details {
     font-size: 2rem;
     margin: 0 1rem;
@@ -26,7 +28,12 @@
     border: 0;
     background: none;
   }
+
   &__action-save {
     margin: 0 1rem 0 0;
+
+    > button {
+      width: 10rem;
+    }
   }
 }

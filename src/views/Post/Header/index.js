@@ -5,7 +5,7 @@ import { InputGroup } from '@blueprintjs/core';
 import SaveButton from './SaveButton';
 import './styles.css';
 
-export const Header = ({ toggleDetail, title = '', set, save, ...props }) => (
+export const Header = ({ toggleDetail, title = '', set, save, saving, ...props }) => (
   <nav
     className="post-header">
     <NavLink
@@ -27,7 +27,7 @@ export const Header = ({ toggleDetail, title = '', set, save, ...props }) => (
     </button>
     <SaveButton
       className="post-header__action-save"
-      label="Save"
+      label={saving ? <i className="fas fa-spin fa-spinner"></i> : 'Save'}
       onClick={save}
       onSave={save}
       onPublish={() => console.log('publish')}

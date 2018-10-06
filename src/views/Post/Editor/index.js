@@ -1,6 +1,6 @@
 import React from 'react';
 
-import keyShortcuts from './KeyShortcuts';
+import keyShortcuts from './keyShortcuts';
 import render from './render';
 
 import './styles.css';

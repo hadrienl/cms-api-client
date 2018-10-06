@@ -23,3 +23,5 @@
     background: none; }
   .post-header__action-save {
     margin: 0 1rem 0 0; }
+    .post-header__action-save > button {
+      width: 10rem; }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ButtonGroup, Button, Popover, Menu, MenuItem, MenuDivider } from '@blueprintjs/core';
 
-export const SaveButton = ({ label, onClick, onSave, onPublish, onDelete, ...props }) => (
+export const SaveButton = ({ label, onClick, onSave, saving, onPublish, onDelete, ...props }) => (
   <ButtonGroup
     {...props}>
     <Button
@@ -26,7 +26,7 @@ export const SaveButton = ({ label, onClick, onSave, onPublish, onDelete, ...pro
     </Menu>
     )}>
       <Button
-        text="v"
+        text={<i className="fas fa-chevron-down"></i>}
       />
     </Popover>
   </ButtonGroup>

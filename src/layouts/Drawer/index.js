@@ -24,21 +24,28 @@ export class Drawer extends React.Component {
     this.setState({ visible: !this.state.visible })
   };
 
-  onViewClick = ({ target }) => {
-    const { visible } = this.state;
-    if (!visible || this.drawerRef.current.contains(target)) return;
-    this.setState({ visible: false });
+  componentDidMount() {
+    document.body.addEventListener('click', this._clickListener = e => {
+      const { target } = e;
+      const { visible } = this.state;
+      if (!visible || this.drawerRef.current.contains(target)) return;
+      this.setState({ visible: false });
+    });
+  }
+
+  componentWillUnmount() {
+    document.body.removeEventListener('click', this._clickListener);
   }
 
   render() {
-    const { children, drawer, className, directionFrom } = this.props;
+    const { children, drawer, className, directionFrom, ...props } = this.props;
     const { visible } = this.state;
-    const { onViewClick, toggleDrawer } = this;
+    const { toggleDrawer } = this;
 
     return (
       <div
-        className={`layout-drawer ${className}`}
-        onClick={onViewClick}>
+        {...props}
+        className={`layout-drawer ${className}`}>
         {children({ toggleDrawer })}
         <div
           ref={this.drawerRef}
