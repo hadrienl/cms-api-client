@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router';
 
 import { withState } from '../../services/State';
-import { getPostBy, savePost } from '../../services/posts';
+import { savePost } from '../../services/posts';
 import Post from '../../services/posts/Post';
 import KeyShortcuts from '../../components/KeyShortcuts';
 import PostForm from './PostForm';
@@ -77,10 +77,12 @@ export default withRouter(withState(({ match: { params: { id } }, ...props }) =>
     {postFormProps => (
       <Post
         id={id !== NEW_ID_LABEL ? id : null}>
-        {postProps =>
+        {({ post, loading, error }) =>
           <PostView
             {...props}
-            {...postProps}
+            post={post}
+            postIsLoading={loading}
+            postHasError={error}
             form={postFormProps} />
         }
       </Post>

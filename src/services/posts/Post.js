@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { getPostBy } from './index';
-
-const CACHE = new Map();
+import { getPost, addPost } from './cache';
 
 export class Post extends React.Component {
   static propTypes = {
@@ -11,11 +10,9 @@ export class Post extends React.Component {
   };
 
   state = {
-    post: this.props.id
-      ? CACHE.get(this.props.id)
-      : undefined,
-    postIsLoading: false,
-    postHasError: false,
+    post: getPost(this.props.id),
+    loading: false,
+    error: false,
   };
 
   componentDidMount() {
@@ -31,8 +28,8 @@ export class Post extends React.Component {
 
   async loadPost(id) {
     this.setState({
-      postIsLoading: true,
-      postHasError: false,
+      loading: true,
+      error: false,
     });
 
     let post;
@@ -41,25 +38,25 @@ export class Post extends React.Component {
     } catch (e) {
       if (this.isCancelled) return;
       this.setState({
-        postHasError: e,
+        error: e,
       });
       return;
     }
 
-    CACHE.set(id, post);
+    addPost(post);
 
     if (this.isCancelled) return;
 
     this.setState({
       post,
-      postIsLoading: false,
+      loading: false,
     });
   }
 
   render() {
     const { children } = this.props;
-    const { post, postIsLoading } = this.state;
-    return children({ post, postIsLoading });
+    const { post, loading, error } = this.state;
+    return children({ post, loading, error });
   }
 };
 

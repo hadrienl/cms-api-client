@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { withState } from '../../services/State';
-import { getPosts } from '../../services/posts';
+import Posts from '../../services/posts/Posts';
 import render from './render';
 
 export class PostsList extends React.Component {
@@ -13,26 +13,29 @@ export class PostsList extends React.Component {
     page: 1,
   };
 
-  componentDidMount() {
-    this.loadPosts();
-  }
-
-  async loadPosts() {
-    const { state: { setState } } = this.props;
-    const { page } = this.state;
-    const posts = await getPosts({ page, perPage: 10 });
-
-    setState({ posts: { list: posts }});
-  }
+  displayPage = page => this.setState({ page });
 
   render() {
-    const { render: Render, state: { posts: { list = [] } = {} }, ...nextProps } = this.props;
+    const { render: Render, ...nextProps } = this.props;
+    const { page } = this.state;
+    const { displayPage } = this;
     const props = {
       ...nextProps,
-      list,
+      displayPage,
     };
 
-    return <Render {...props} />;
+    return (
+      <Posts
+        page={page}>
+        {({ posts, loading: postsAreLoading, error: postsHaveError }) => (
+          <Render
+            {...props}
+            posts={posts}
+            postsAreLoading={postsAreLoading}
+            postsHaveError={postsHaveError} />
+        )}
+      </Posts>
+    );
   }
 };
 

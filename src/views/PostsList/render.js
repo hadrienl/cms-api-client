@@ -1,14 +1,14 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-export const PostsListRender = ({ list }) => (
+export const PostsListRender = ({ posts }) => (
   <div>
     <NavLink
       to="/posts/new">
       Nouveau post
     </NavLink>
     <ul>
-      {list.map(post => (
+      {posts.map(post => (
         <li
           key={post.id}>
           <NavLink

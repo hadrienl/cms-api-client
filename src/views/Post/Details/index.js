@@ -12,12 +12,13 @@ export class Details extends React.Component {
   };
 
   toggleIsEvent = () => {
-    const { set } = this.props;
+    const isEvent = !this.state.isEvent;
+    /*const { set } = this.props;
     const isEvent = !this.state.isEvent;
     if (!isEvent) {
       set('eventFrom')(null);
       set('eventTo')(null);
-    }
+    }*/
     this.setState({ isEvent });
   }
 
