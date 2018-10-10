@@ -3,62 +3,43 @@ import { withRouter } from 'react-router';
 
 import { withState } from '../../services/State';
 import { getPostBy, savePost } from '../../services/posts';
+import Post from '../../services/posts/Post';
 import KeyShortcuts from '../../components/KeyShortcuts';
+import PostForm from './PostForm';
 import render from './render';
 
-export class Post extends React.Component {
+const NEW_ID_LABEL = 'new';
+
+export class PostView extends React.Component {
   static defaultProps = {
     render,
+    post: {},
   };
 
   state = {
-    loading: true,
-  };
-
-  componentDidMount() {
-    const { match: { params: { id } } } = this.props;
-    if (id !== 'new') {
-      this.loadPost(id);
-    }
-  }
-
-  async loadPost(id) {
-    this.setState({
-      loading: true,
-    });
-    const post = await getPostBy({ id });
-
-    this.setState({
-      ...post,
-      loading: false,
-      saving: false,
-    });
-  }
-
-  set = k => {
-    switch (k) {
-      case 'publishedAt':
-      case 'eventFrom':
-      case 'eventTo':
-        return date => this.setState({ [k]: date });
-      default:
-        return ({ target: { value }}) => this.setState({ [k]: value });
-    }
+    saving: false,
   };
 
   save = async () => {
-    const { match: { params: { id } }, location: { pathname }, history: { replace } } = this.props;
-    const { loading, saving, displayDetails, ...postData } = this.state;
+    const {
+      location: { pathname },
+      history: { replace },
+      form,
+      post,
+    } = this.props;
 
     this.setState({ saving: true });
 
-    const postId = await savePost(postData);
-
-    if (id !== postId) {
-      replace(pathname.replace('new', postId));
-    }
+    const postId = await savePost({
+      ...post,
+      ...form.values(),
+    });
 
     this.setState({ saving: false });
+
+    if (post.id !== postId) {
+      replace(pathname.replace(NEW_ID_LABEL, postId));
+    }
   }
 
   shortcuts = [{
@@ -75,11 +56,10 @@ export class Post extends React.Component {
 
   render() {
     const { render: Render, ...nextProps } = this.props;
-    const { set, save, shortcuts } = this;
+    const { save, shortcuts } = this;
     const props = {
       ...nextProps,
       ...this.state,
-      set,
       save,
     };
 
@@ -92,4 +72,18 @@ export class Post extends React.Component {
   }
 };
 
-export default withRouter(withState(Post));
+export default withRouter(withState(({ match: { params: { id } }, ...props }) => (
+  <PostForm>
+    {postFormProps => (
+      <Post
+        id={id !== NEW_ID_LABEL ? id : null}>
+        {postProps =>
+          <PostView
+            {...props}
+            {...postProps}
+            form={postFormProps} />
+        }
+      </Post>
+    )}
+  </PostForm>
+)));

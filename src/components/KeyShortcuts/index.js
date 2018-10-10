@@ -35,7 +35,7 @@ export class KeyShortcuts extends React.Component {
   }
 
   componentWillUnmount() {
-    document.body.addEventListener('keydown', this._keydownListener);
+    document.body.removeEventListener('keydown', this._keydownListener);
   }
 
   render() {

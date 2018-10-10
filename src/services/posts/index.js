@@ -1,4 +1,4 @@
-import { firestore, convert } from './Firebase';
+import { firestore, convert } from '../Firebase';
 import slug from 'slug';
 
 const collection = firestore.collection('posts')
@@ -49,9 +49,11 @@ export async function savePost(post) {
 }
 
 async function createPost(data) {
-  data.createdAt = new Date();
-  const { id } = await collection.add(cleanPost(data));
-  return id;
+  const { id, ...post } = data;
+
+  post.createdAt = new Date();
+  const { id: postId } = await collection.add(cleanPost(post));
+  return postId;
 }
 
 async function updatePost(data) {

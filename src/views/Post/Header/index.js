@@ -1,7 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { InputGroup } from '@blueprintjs/core';
+import { InputGroup, Intent } from '@blueprintjs/core';
 
+import { Control } from '../PostForm';
 import SaveButton from './SaveButton';
 import './styles.css';
 
@@ -14,10 +15,20 @@ export const Header = ({ toggleDetail, title = '', set, save, saving, ...props }
       title="Back">
       <i className="fas fa-times-circle"></i>
     </NavLink>
-    <InputGroup
-      className="post-header__title"
+    <Control
+      name="title"
       value={title}
-      onChange={set('title')} />
+      validators={{
+        required: true,
+      }}
+      component={({ valid, pristine, touched, changeValue, ...domProps }) => (
+        <InputGroup
+          {...domProps}
+          intent={(!pristine && !valid) ? Intent.WARNING : null}
+          className="post-header__title"
+         />
+      )}
+    />
     <button
       className="post-header__action-details"
       type="button"

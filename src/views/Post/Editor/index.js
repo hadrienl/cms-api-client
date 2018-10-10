@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Control } from '../PostForm';
 import keyShortcuts from './keyShortcuts';
 import render from './render';
 
@@ -13,15 +14,16 @@ export class Editor extends React.Component {
   textareaRef = React.createRef();
 
   insertImage = ({ alt = '', src, filename, position }) => {
-    const { content, onChange } = this.props;
+    const { control: { value: content, onChange } } = this.props;
     // TODO use position to find the right markup
+    console.log('TODO', {position})
     const newContent = content.replace(`![${alt}]()`, `![${alt || filename}](${src})`);
     onChange({ target: { value: newContent } });
   }
 
   onKeyDown = e => {
     const { ctrlKey, metaKey, shiftKey, key } = e;
-    const { content, onChange } = this.props;
+    const { control: { value: content, onChange } } = this.props;
     const { textareaRef: { current: textarea } } = this;
     const { selectionStart } = textarea;
     const newContent = keyShortcuts({ ctrlKey, metaKey, shiftKey, key, content, selectionStart })
@@ -37,11 +39,11 @@ export class Editor extends React.Component {
   };
 
   render() {
-    const { render: Render, content, onChange } = this.props;
+    const { render: Render, control } = this.props;
     const { insertImage, onKeyDown, textareaRef } = this;
+    const { valid, pristine, touched, changeValue, ...domProps } = control;
     const props = {
-      content,
-      onChange,
+      domProps,
       insertImage,
       onKeyDown,
       textareaRef,
@@ -51,4 +53,18 @@ export class Editor extends React.Component {
   }
 }
 
-export default Editor;
+export default ({ value, ...props}) => (
+  <Control
+    name="content"
+    value={value}
+    validators={{
+      required: true,
+    }}
+    component={controlProps => (
+      <Editor
+        control={controlProps}
+        {...props}
+      />
+    )}
+  />
+);

@@ -48,6 +48,12 @@ export const MainRender = ({ homeRoute, routes }) => (
                       loader: () => import('../Files'),
                       loading: Loading,
                     })}/>
+                  <Route
+                    path="/settings"
+                    component={Loadable({
+                      loader: () => import('../Settings'),
+                      loading: Loading
+                    })} />
                 </Switch>,
               ]}>
             </Layout>

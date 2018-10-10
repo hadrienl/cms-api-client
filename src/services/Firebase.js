@@ -18,7 +18,7 @@ export function convertStrings(obj) {
   for (const attr of Object.keys(obj)) {
     const value = obj[attr];
     if (typeof value === 'string') {
-      obj[attr] = value.replace(/\\n/g, '\n');
+      obj[attr] = (value || '').replace(/\\n/g, '\n');
     }
   }
   return { ...obj};
@@ -27,7 +27,7 @@ export function convertStrings(obj) {
 export function convertDates(obj) {
   for (const attr of Object.keys(obj)) {
     const value = obj[attr];
-    if (value.constructor.name === 'Timestamp') {
+    if (value && value.constructor.name === 'Timestamp') {
       obj[attr] = new Date(value.seconds * 1000);
     }
   }

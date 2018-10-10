@@ -6,14 +6,14 @@ import Editor from './Editor';
 import Details from './Details';
 import './styles.css';
 
-export const PostRender = ({ content, set, ...props }) => (
+export const PostRender = ({ post, post: { content }, ...props }) => (
   <Drawer
     className="post"
     drawer={(
       <Details
-        className="post__details"
+        {...post}
         {...props}
-        set={set} />
+        className="post__details" />
     )}
     directionFrom="right">
     {({ toggleDrawer }) => (
@@ -21,15 +21,14 @@ export const PostRender = ({ content, set, ...props }) => (
         <div
           className="post__header">
           <Header
+            {...post}
             {...props}
-            set={set}
             toggleDetail={toggleDrawer} />
         </div>
         <div
           className="post__edit">
           <Editor
-            content={content}
-            onChange={set('content')} />
+            value={content} />
         </div>
       </React.Fragment>
     )}

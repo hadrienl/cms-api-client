@@ -2,26 +2,34 @@ import React from 'react';
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 import 'react-day-picker/lib/style.css';
 
-export const DetailsRender = ({ className, set, publishedAt, slug = '', isEvent, toggleIsEvent, eventFrom, eventTo }) => (
+import { Control } from '../PostForm';
+
+export const DetailsRender = ({ className, publishedAt, slug = '', isEvent, toggleIsEvent, eventFrom, eventTo }) => (
   <div
     className={className}>
     <fieldset>
       <label>
         Slug :
-        <input
+        <Control
+          name="slug"
           value={slug}
-          onChange={set('slug')}
-          />
+        />
       </label>
 
       <label>
         Publié le : 
-        <DayPickerInput
+        <Control
+          name="publishedAt"
           value={publishedAt}
-          format="YYYY-MM-DD"
-          placeholder="YYYY-MM-DD"
-          onDayChange={set('publishedAt')}
-          />
+          component={({ value, changeValue }) => (
+            <DayPickerInput
+              value={value}
+              format="YYYY-MM-DD"
+              placeholder="YYYY-MM-DD"
+              onDayChange={changeValue}
+            />
+          )}
+        />
       </label>
     </fieldset>
 
@@ -36,19 +44,31 @@ export const DetailsRender = ({ className, set, publishedAt, slug = '', isEvent,
       {isEvent && <React.Fragment>
         <label>
           du
-          <DayPickerInput
+          <Control
+            name="eventFrom"
             value={eventFrom}
-            format="YYYY-MM-DD"
-            placeholder="YYYY-MM-DD"
-            onDayChange={set('eventFrom')}
-            />
+            component={({ value, changeValue }) => (
+              <DayPickerInput
+                value={value}
+                format="YYYY-MM-DD"
+                placeholder="YYYY-MM-DD"
+                onDayChange={changeValue}
+                />
+              )}
+          />
           au
-          <DayPickerInput
+          <Control
+            name="eventTo"
             value={eventTo}
-            format="YYYY-MM-DD"
-            placeholder="YYYY-MM-DD"
-            onDayChange={set('eventTo')}
-            />
+            component={({ value, changeValue }) => (
+              <DayPickerInput
+                value={value}
+                format="YYYY-MM-DD"
+                placeholder="YYYY-MM-DD"
+                onDayChange={changeValue}
+                />
+              )}
+          />
         </label>
       </React.Fragment>}
     </fieldset>
