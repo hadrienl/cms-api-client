@@ -72,7 +72,7 @@ export class Control extends React.Component {
   }
 
   eval(expr) {
-    const { groupState: local, formValues: form } = this.props;
+    const { groupState: { setState, ...local }, formValues: form } = this.props;
     const test = Function('local', 'form', `return ${expr}`); // eslint-disable-line no-new-func
     return test(local, form);
   }
