@@ -17,7 +17,7 @@ export const PostRender = ({ post, post: { content }, ...props }) => (
     )}
     directionFrom="right">
     {({ toggleDrawer }) => (
-      <React.Fragment>
+      <form onSubmit={props.form.handleSubmit}>
         <div
           className="post__header">
           <Header
@@ -30,7 +30,7 @@ export const PostRender = ({ post, post: { content }, ...props }) => (
           <Editor
             value={content} />
         </div>
-      </React.Fragment>
+      </form>
     )}
   </Drawer>
 );

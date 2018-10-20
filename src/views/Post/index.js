@@ -2,13 +2,11 @@ import React from 'react';
 import { withRouter } from 'react-router';
 
 import { withState } from '../../services/State';
-import { savePost } from '../../services/posts';
 import Post from '../../services/posts/Post';
 import KeyShortcuts from '../../components/KeyShortcuts';
 import PostForm from './PostForm';
 import render from './render';
-
-const NEW_ID_LABEL = 'new';
+import { NEW_ID_LABEL } from './constants';
 
 export class PostView extends React.Component {
   static defaultProps = {
@@ -16,47 +14,22 @@ export class PostView extends React.Component {
     post: {},
   };
 
-  state = {
-    saving: false,
-  };
-
-  save = async () => {
-    const {
-      location: { pathname },
-      history: { replace },
-      form,
-      post,
-    } = this.props;
-
-    this.setState({ saving: true });
-
-    const postId = await savePost({
-      ...post,
-      ...form.values(),
-    });
-
-    this.setState({ saving: false });
-
-    if (post.id !== postId) {
-      replace(pathname.replace(NEW_ID_LABEL, postId));
-    }
-  }
-
   shortcuts = [{
     meta: true,
     key: 's',
-    callback: this.save,
+    callback: this.props.form.handleSubmit,
     preventDefault: true,
   }, {
     ctrl: true,
     key: 's',
-    callback: this.save,
+    callback: this.props.form.handleSubmit,
     preventDefault: true,
   }];
 
   render() {
     const { render: Render, ...nextProps } = this.props;
     const { save, shortcuts } = this;
+
     const props = {
       ...nextProps,
       ...this.state,
@@ -73,19 +46,15 @@ export class PostView extends React.Component {
 };
 
 export default withRouter(withState(({ match: { params: { id } }, ...props }) => (
-  <PostForm>
-    {postFormProps => (
-      <Post
-        id={id !== NEW_ID_LABEL ? id : null}>
-        {({ post, loading, error }) =>
-          <PostView
-            {...props}
-            post={post}
-            postIsLoading={loading}
-            postHasError={error}
-            form={postFormProps} />
-        }
-      </Post>
-    )}
-  </PostForm>
+  <Post
+    id={id !== NEW_ID_LABEL ? id : null}>{({ post, loading, error }) =>
+    <PostForm post={post}>{postFormProps => (
+      <PostView
+        {...props}
+        post={post}
+        postIsLoading={loading}
+        postHasError={error}
+        form={postFormProps} />
+    )}</PostForm>
+  }</Post>
 )));

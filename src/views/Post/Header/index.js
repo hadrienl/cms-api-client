@@ -1,12 +1,12 @@
 import React from 'react';
+import { Field } from 'react-final-form';
 import { NavLink } from 'react-router-dom';
 import { InputGroup, Intent } from '@blueprintjs/core';
 
-import { Control } from '../PostForm';
 import SaveButton from './SaveButton';
 import './styles.css';
 
-export const Header = ({ toggleDetail, title = '', set, save, saving, ...props }) => (
+export const Header = ({ toggleDetail, title = '', set, form: { handleSubmit, submitting },...props }) => (
   <nav
     className="post-header">
     <NavLink
@@ -15,20 +15,13 @@ export const Header = ({ toggleDetail, title = '', set, save, saving, ...props }
       title="Back">
       <i className="fas fa-times-circle"></i>
     </NavLink>
-    <Control
-      name="title"
-      value={title}
-      validators={{
-        required: true,
-      }}
-      component={({ valid, pristine, touched, changeValue, ...domProps }) => (
-        <InputGroup
-          {...domProps}
-          intent={(!pristine && !valid) ? Intent.WARNING : null}
-          className="post-header__title"
-         />
-      )}
-    />
+    <Field name="title">{({ input, meta }) => (
+      <InputGroup
+        {...input}
+        intent={(!meta.pristine && !meta.valid) ? Intent.WARNING : null}
+        className="post-header__title"
+      />
+    )}</Field>
     <button
       className="post-header__action-details"
       type="button"
@@ -38,9 +31,9 @@ export const Header = ({ toggleDetail, title = '', set, save, saving, ...props }
     </button>
     <SaveButton
       className="post-header__action-save"
-      label={saving ? <i className="fas fa-spin fa-spinner"></i> : 'Save'}
-      onClick={save}
-      onSave={save}
+      label={submitting ? <i className="fas fa-spin fa-spinner"></i> : 'Save'}
+      onClick={handleSubmit}
+      onSave={handleSubmit}
       onPublish={() => console.log('publish')}
       onDelete={() => console.log('delete')}
     />

@@ -1,6 +1,6 @@
 import React from 'react';
+import { Field } from 'react-final-form';
 
-import { Control } from '../PostForm';
 import keyShortcuts from './keyShortcuts';
 import render from './render';
 
@@ -14,7 +14,7 @@ export class Editor extends React.Component {
   textareaRef = React.createRef();
 
   insertImage = ({ alt = '', src, filename, position }) => {
-    const { control: { value: content, onChange } } = this.props;
+    const { input: { value: content, onChange } } = this.props;
     // TODO use position to find the right markup
     console.log('TODO', {position})
     const newContent = content.replace(`![${alt}]()`, `![${alt || filename}](${src})`);
@@ -23,7 +23,7 @@ export class Editor extends React.Component {
 
   onKeyDown = e => {
     const { ctrlKey, metaKey, shiftKey, key } = e;
-    const { control: { value: content, onChange } } = this.props;
+    const { input: { value: content, onChange } } = this.props;
     const { textareaRef: { current: textarea } } = this;
     const { selectionStart } = textarea;
     const newContent = keyShortcuts({ ctrlKey, metaKey, shiftKey, key, content, selectionStart })
@@ -39,11 +39,11 @@ export class Editor extends React.Component {
   };
 
   render() {
-    const { render: Render, control } = this.props;
+    const { render: Render, meta , input } = this.props;
     const { insertImage, onKeyDown, textareaRef } = this;
-    const { valid, pristine, touched, changeValue, ...domProps } = control;
     const props = {
-      domProps,
+      input,
+      meta,
       insertImage,
       onKeyDown,
       textareaRef,
@@ -54,17 +54,11 @@ export class Editor extends React.Component {
 }
 
 export default ({ value, ...props}) => (
-  <Control
-    name="content"
-    value={value}
-    validators={{
-      required: true,
-    }}
-    component={controlProps => (
-      <Editor
-        control={controlProps}
-        {...props}
-      />
-    )}
-  />
+  <Field
+    name="content">{({ input, meta }) => (
+    <Editor
+      input={input}
+      meta={meta}
+    />
+  )}</Field>
 );

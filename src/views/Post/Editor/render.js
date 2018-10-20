@@ -4,17 +4,17 @@ import ReactMarkdown from 'react-markdown';
 import Image from './Image';
 import Link from './Link';
 
-export const EditorRender = ({ domProps, onKeyDown, insertImage, textareaRef }) => (
+export const EditorRender = ({ input, onKeyDown, insertImage, textareaRef }) => (
 <div
   className="editor">
   <textarea
-    {...domProps}
+    {...input}
     className="editor__input"
     ref={textareaRef}
     onKeyDown={onKeyDown} />
   <ReactMarkdown
     className="editor__viewer"
-    source={domProps.value}
+    source={input.value}
     sourcePos
     renderers={{
       image: props => (
