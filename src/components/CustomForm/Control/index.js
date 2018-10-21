@@ -1,23 +1,59 @@
 import React from 'react';
 import { Field, FormSpy } from 'react-final-form';
 import DayPickerInput from 'react-day-picker/DayPickerInput'
+import { FormGroup, Checkbox, InputGroup } from '@blueprintjs/core';
 
 import Group from '../Group';
 import Local from './Local';
 
+const COMPONENTS = {
+  text: ({ input, label }) => (
+    <FormGroup
+      label={label}>
+      <InputGroup {...input} label={label} />
+    </FormGroup>
+  ),
+  checkbox: Checkbox,
+  date: ({ label, input: { value, onChange } }) => (
+    <FormGroup
+      label={label}>
+      <DayPickerInput
+        value={value}
+        format="YYYY-MM-DD"
+        placeholder="YYYY-MM-DD"
+        onDayChange={onChange}
+      />
+    </FormGroup>
+  ),
+}
 export class Control extends React.Component {
   state = {};
 
   componentDidUpdate({ formValues: prevFormValues }) {
-    const { formValues, groupState, control: { name, local } } = this.props;
+    const { form: { change }, formValues, groupState, control: { name, local, hidden } } = this.props;
 
     if (local &&
         groupState[name] === undefined &&
         formValues !== prevFormValues) {
       const value = this.getValue();
+      console.log(name, value)
       groupState.setState({
         [name]: value,
       });
+    }
+
+    if (hidden) {
+      if (this.isHidden()) {
+        if (formValues[name]) {
+          this._savedValue = formValues[name];
+        }
+        change(name, '');
+      } else {
+        if (this._savedValue) {
+          change(name, this._savedValue);
+        }
+        delete this._savedValue;
+      }
     }
   }
 
@@ -32,33 +68,7 @@ export class Control extends React.Component {
 
   getComponent () {
     const { control: { type } } = this.props;
-
-    switch (type) {
-      case 'text':
-        return {
-          component: 'input'
-        };
-      case 'checkbox':
-        return {
-          component: 'input',
-          type: 'checkbox',
-        };
-      case 'date':
-        return {
-          component: ({ input: { value, onChange } }) => (
-            <DayPickerInput
-              value={value}
-              format="YYYY-MM-DD"
-              placeholder="YYYY-MM-DD"
-              onDayChange={onChange}
-            />
-          ),
-        };
-      default:
-        return {
-          component: 'input'
-        };
-    }
+    return COMPONENTS[type] || COMPONENTS.text;
   }
 
   isHidden() {
@@ -73,7 +83,7 @@ export class Control extends React.Component {
 
   eval(expr) {
     const { groupState: { setState, ...local }, formValues: form } = this.props;
-    const test = Function('local', 'form', `return ${expr}`); // eslint-disable-line no-new-func
+    const test = Function('local', 'form', 'window', `return ${expr}`); // eslint-disable-line no-new-func
     return test(local, form);
   }
 
@@ -93,10 +103,9 @@ export class Control extends React.Component {
     const Container = local
       ? Local
       : Field;
-    const component = this.getComponent();
     const containerProps = {
       name,
-      ...component,
+      component: this.getComponent(),
     };
 
     if (local) {
@@ -108,16 +117,13 @@ export class Control extends React.Component {
       }
     }
 
-    const labelFirst = !['checkbox', 'radio'].includes(type);
-
     return (
       <div>
         <label>
-          {labelFirst && `${label} :`}
           <Container
+            label={label}
             {...containerProps}
           />
-          {!labelFirst && ` ${label}`}
         </label>
       </div>
     );
@@ -125,8 +131,9 @@ export class Control extends React.Component {
 }
 
 export default props =>
-  <FormSpy>{({ values }) =>
+  <FormSpy>{({ form, values }) =>
     <Control
+      form={form}
       formValues={values}
       {...props} />
   }</FormSpy>;
