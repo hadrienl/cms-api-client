@@ -29,14 +29,13 @@ const COMPONENTS = {
 export class Control extends React.Component {
   state = {};
 
-  componentDidUpdate({ formValues: prevFormValues }) {
+  componentDidUpdate({ formValues: prevFormValues, initialValues: prevInitialValues }) {
     const { form: { change }, formValues, groupState, control: { name, local, hidden } } = this.props;
 
     if (local &&
-        groupState[name] === undefined &&
+        this.props.initialValues !== prevInitialValues &&
         formValues !== prevFormValues) {
       const value = this.getValue();
-      console.log(name, value)
       groupState.setState({
         [name]: value,
       });
@@ -131,9 +130,10 @@ export class Control extends React.Component {
 }
 
 export default props =>
-  <FormSpy>{({ form, values }) =>
+  <FormSpy>{({ form, values, initialValues }) =>
     <Control
       form={form}
       formValues={values}
+      initialValues={initialValues}
       {...props} />
   }</FormSpy>;
