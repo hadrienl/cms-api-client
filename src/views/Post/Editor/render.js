@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown/with-html';
 
 import Image from './Image';
 import Link from './Link';
@@ -16,6 +16,7 @@ export const EditorRender = ({ input, onKeyDown, insertImage, textareaRef }) => 
     className="editor__viewer"
     source={input.value}
     sourcePos
+    escapeHtml={false}
     renderers={{
       image: props => (
         <Image
