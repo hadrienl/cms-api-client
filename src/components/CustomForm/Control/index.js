@@ -1,8 +1,8 @@
 import React from 'react';
 import { Field, FormSpy } from 'react-final-form';
-import DayPickerInput from 'react-day-picker/DayPickerInput'
 import { FormGroup, Checkbox, InputGroup } from '@blueprintjs/core';
 
+import DateTimeInput from '../../DateTimeInput';
 import Group from '../Group';
 import Local from './Local';
 
@@ -17,11 +17,11 @@ const COMPONENTS = {
   date: ({ label, input: { value, onChange } }) => (
     <FormGroup
       label={label}>
-      <DayPickerInput
-        value={value}
+      <DateTimeInput
+        initialValue={value}
         format="YYYY-MM-DD"
         placeholder="YYYY-MM-DD"
-        onDayChange={onChange}
+        onChange={onChange}
       />
     </FormGroup>
   ),
