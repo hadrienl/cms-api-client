@@ -1,6 +1,5 @@
 import React from 'react';
 import CustomForm from '../../../components/CustomForm';
-import 'react-day-picker/lib/style.css';
 
 import controls from '../controls';
 

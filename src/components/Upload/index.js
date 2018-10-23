@@ -6,6 +6,7 @@ import { uploadFile } from '../../services/files';
 export class Upload extends React.Component {
   static propTypes = {
     onUpload: PropTypes.func,
+    renderLoading: PropTypes.object,
   };
 
   static defaultProps = {
@@ -27,15 +28,21 @@ export class Upload extends React.Component {
   }
 
   render() {
+    const { renderLoading, className } = this.props;
     const { loading } = this.state;
     const { upload } = this;
 
     return (
-      <input
-        value=""
-        type="file"
-        onChange={upload}
-        disabled={loading} />
+      <span className={className}>
+        {(renderLoading && loading)
+          ? renderLoading
+          : <input
+              value=""
+              type="file"
+              onChange={upload}
+              disabled={loading} />
+        }
+      </span>
     );
   }
 };

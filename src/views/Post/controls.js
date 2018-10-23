@@ -25,4 +25,8 @@ export default [{
     label: 'au',
     hidden: 'local.isEvent !== true',
   }]
-}]
+}, {
+  type: 'image',
+  name: 'cover',
+  label: 'Couverture',
+}];

@@ -3,6 +3,7 @@ import { Field, FormSpy } from 'react-final-form';
 import { FormGroup, Checkbox, InputGroup } from '@blueprintjs/core';
 
 import DateTimeInput from '../../DateTimeInput';
+import ImageUpload from '../../ImageUpload';
 import Group from '../Group';
 import Local from './Local';
 
@@ -25,6 +26,14 @@ const COMPONENTS = {
       />
     </FormGroup>
   ),
+  image: ({ label, input: { value, onChange }}) => (
+    <FormGroup
+      label={label}>
+      <ImageUpload
+        value={value}
+        onChange={onChange} />
+    </FormGroup>
+  )
 }
 export class Control extends React.Component {
   state = {};
