@@ -8,6 +8,13 @@ import './styles.css';
 export class ImageUpload extends React.Component {
   state = {};
 
+  componentDidUpdate ({ initialValue: prevInitialValue}) {
+    const { initialValue } = this.props;
+    if (initialValue !== prevInitialValue) {
+      this.setState({ value: initialValue });
+    }
+  }
+
   onUpload = ({ url: value }) => {
     this.setState({ value });
     const { onChange } = this.props;

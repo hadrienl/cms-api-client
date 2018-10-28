@@ -30,7 +30,7 @@ const COMPONENTS = {
     <FormGroup
       label={label}>
       <ImageUpload
-        value={value}
+        initialValue={value}
         onChange={onChange} />
     </FormGroup>
   )
