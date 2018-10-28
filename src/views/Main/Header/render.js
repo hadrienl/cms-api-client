@@ -1,10 +1,13 @@
 import React from 'react';
 
-import './styles.css';
+import styles from './styles.module.scss';
 
-export const HeaderRender = props => (
-  <div
-    className="main-header">Header</div>
+export const HeaderRender = ({ theme, switchTheme }) => (
+  <div className={styles.mainHeader}>
+    <div className={styles.mainHeader__title}>
+      Wait for a name CMS client
+    </div>
+  </div>
 );
 
 export default HeaderRender;

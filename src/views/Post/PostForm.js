@@ -24,6 +24,7 @@ export class PostForm extends React.Component {
   }
 
   validate = form => {
+    return true;
     const { title, content } = form;
     const errors = {};
 

@@ -12,7 +12,7 @@ export class Posts extends React.Component {
 
   static defaultProps = {
     page: 1,
-    perPage: 10,
+    perPage: 100,
   };
 
   state = {

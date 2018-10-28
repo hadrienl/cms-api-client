@@ -3,7 +3,7 @@ import React from 'react';
 import Upload from '../Upload';
 import Viewer from './Viewer';
 
-import './styles.css';
+import './styles.scss';
 
 export class ImageUpload extends React.Component {
   state = {};

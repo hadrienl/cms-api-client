@@ -4,7 +4,7 @@ import { Field } from 'react-final-form';
 import keyShortcuts from './keyShortcuts';
 import render from './render';
 
-import './styles.css';
+import './styles.scss';
 
 export class Editor extends React.Component {
   static defaultProps = {

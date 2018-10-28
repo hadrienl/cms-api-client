@@ -6,10 +6,10 @@
     width: 50%;
     border: none;
     outline: 0;
-    font-size: 1.4rem;
+    font-size: 1rem;
     resize: none;
     padding: 1rem;
-    min-height: calc(100vh - 3.4rem);
+    min-height: calc(100vh - 5.5rem);
     text-align: left;
   }
 
@@ -23,5 +23,12 @@
     img {
       max-width: 100%;
     }
+  }
+}
+
+.theme-dark {
+  .editor__input {
+    background: #333;
+    color: white;
   }
 }

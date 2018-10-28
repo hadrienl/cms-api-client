@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Theme from '../../components/Theme';
 import render from './render';
 
 export class Main extends React.Component {
@@ -13,7 +14,11 @@ export class Main extends React.Component {
       ...nextProps,
     };
 
-    return <Render {...props} />;
+    return (
+      <Theme>
+        <Render {...props} />
+      </Theme>
+    );
   }
 };
 

@@ -29,4 +29,9 @@ export default [{
   type: 'image',
   name: 'cover',
   label: 'Couverture',
+},
+{
+  type: 'list',
+  name: 'tags',
+  label: 'Tags'
 }];

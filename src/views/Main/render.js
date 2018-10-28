@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router';
 import Loadable from 'react-loadable';
 
 import Header from './Header';
-import Footer from './Footer';
+import Footer from '../../components/Footer';
 import Loading from '../../components/Loading';
 
 import Auth from '../../components/Auth';

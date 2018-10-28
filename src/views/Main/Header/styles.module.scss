@@ -1,0 +1,9 @@
+.mainHeader {
+  max-height: 2rem;
+  display: flex;
+  line-height: 2rem;
+
+  &__title {
+    flex: 1;
+  }
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Popover, PopoverInteractionKind } from '@blueprintjs/core';
 
-import './styles.css';
+import './styles.scss';
 
 export class Link extends React.Component {
   render() {
