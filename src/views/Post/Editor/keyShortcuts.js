@@ -13,6 +13,8 @@ function getShortcut({ key, ctrlKey, metaKey, shiftKey }) {
       return insertImage;
     case (ctrlKey || metaKey) && shiftKey && key === 'L':
       return insertLink;
+    case (key === 'Tab'):
+      return insertTab;
     default:
       return () => null;
   }
@@ -30,7 +32,7 @@ function insertBr ({ content, selectionStart }) {
 function insertImage ({ content, selectionStart }) {
   const image = '![]()';
   return {
-    content: `${content.slice(0, selectionStart)}${image}\n${content.slice(selectionStart, +Infinity)}`,
+    content: `${content.slice(0, selectionStart)}${image}\n${content.slice(selectionStart, Infinity)}`,
     carret: 2,
   };
 }
@@ -39,7 +41,15 @@ function insertImage ({ content, selectionStart }) {
 function insertLink ({ content, selectionStart }) {
   const link = '[]()';
   return {
-    content: `${content.slice(0, selectionStart)}${link}\n${content.slice(selectionStart, +Infinity)}`,
+    content: `${content.slice(0, selectionStart)}${link}\n${content.slice(selectionStart, Infinity)}`,
     carret: 1,
   };
+}
+
+function insertTab ({ content, selectionStart }) {
+  const tab = '    ';
+  return {
+    content: `${content.slice(0, selectionStart)}${tab}${content.slice(selectionStart, Infinity)}`,
+    carret: 4,
+  }
 }
