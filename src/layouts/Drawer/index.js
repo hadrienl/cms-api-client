@@ -39,17 +39,17 @@ export class Drawer extends React.Component {
 
   render() {
     const { children, drawer, className, directionFrom, ...props } = this.props;
-    const { visible } = this.state;
+    const { visible: drawerIsVisible } = this.state;
     const { toggleDrawer } = this;
 
     return (
       <div
         {...props}
         className={`layout-drawer ${className}`}>
-        {children({ toggleDrawer })}
+        {children({ toggleDrawer, drawerIsVisible })}
         <div
           ref={this.drawerRef}
-          className={`layout-drawer__panel layout-drawer__panel--${directionFrom} ${visible ? 'visible' : 'hidden'}`}>
+          className={`layout-drawer__panel layout-drawer__panel--${directionFrom} ${drawerIsVisible ? 'visible' : 'hidden'}`}>
           {drawer}
         </div>
       </div>

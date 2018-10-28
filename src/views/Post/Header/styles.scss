@@ -1,7 +1,9 @@
+@import 'src/theme/variables';
+
 .post-header {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid $LIGHT_BORDER_COLOR;
 
   &__action-back {
     font-size: 2rem;
@@ -35,5 +37,11 @@
     > button {
       width: 10rem;
     }
+  }
+}
+
+.theme-dark {
+  .post-header {
+    border-color: $DARK_BORDER_COLOR;
   }
 }

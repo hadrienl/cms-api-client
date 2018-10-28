@@ -1,3 +1,5 @@
+@import 'src/theme/variables';
+
 .editor {
   display: flex;
 
@@ -14,7 +16,7 @@
   }
 
   &__input {
-    border-right: 1px solid lightgray;
+    border-right: 1px solid $LIGHT_BORDER_COLOR;
     font-family: 'Anonymous Pro', monospace;
   }
 
@@ -29,6 +31,7 @@
 .theme-dark {
   .editor__input {
     background: #333;
+    border-color: $DARK_BORDER_COLOR;
     color: white;
   }
 }

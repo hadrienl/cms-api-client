@@ -17,9 +17,11 @@ export const PostRender = ({ post, post: { content }, ...props }) => (
         className="post__details" />
     )}
     directionFrom="right">
-    {({ toggleDrawer }) => (
+    {({ toggleDrawer, drawerIsVisible }) => (
       <>
-        <form onSubmit={props.form.handleSubmit}>
+        <form
+          onSubmit={props.form.handleSubmit}
+          className={`post__form ${drawerIsVisible ? 'post__form--blured' : ''}`}>
           <div
             className="post__header">
             <Header

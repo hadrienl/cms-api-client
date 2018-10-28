@@ -15,7 +15,8 @@ export class Link extends React.Component {
             className="markdown-viewer__link-popover">
             <a
               href={href}
-              target="_blank">
+              target="_blank"
+              rel="noopener noreferrer">
               {href}
             </a>
           </div>
