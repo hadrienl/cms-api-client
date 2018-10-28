@@ -1,13 +1,13 @@
 import React from 'react';
 
-import styles from './styles.module.scss';
+import './styles.scss';
 
 export const LoadingRender = props => (
-  <div className={styles.loading}>
+  <div className="loading">
     Loading
-    <span className={styles.loadingDot}>.</span>
-    <span className={styles.loadingDot}>.</span>
-    <span className={styles.loadingDot}>.</span>
+    <span className="loading__dot">.</span>
+    <span className="loading__dot">.</span>
+    <span className="loading__dot">.</span>
   </div>
 );
 
