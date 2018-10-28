@@ -12,6 +12,34 @@ export class Editor extends React.Component {
   };
 
   textareaRef = React.createRef();
+  markdownViewerRef = React.createRef();
+  
+  componentDidMount() {
+    try {
+      this.textareaRef.current.addEventListener('mousewheel', this.textareaListener = e => this.onScroll(e, this.textareaRef));
+      this.markdownViewerRef.current.addEventListener('mousewheel', this.markdownViewerListener = e => this.onScroll(e, this.markdownViewerRef));
+    } catch (e) {}
+  }
+
+  componentWillUnount() {
+    this.textareaRef.current.removeEventListener('mousewheel', this.textareaListener);
+    this.markdownViewerRef.current.removeEventListener('mousewheel', this.markdownViewerListener);
+  }
+
+  onScroll = ({ target }, ref) => {
+    const elToSync = ref === this.textareaRef
+      ? this.markdownViewerRef
+      : this.textareaRef;
+
+    const height = ref.current.scrollHeight;
+    const { scrollTop } = ref.current;
+    const percent = scrollTop / height;
+
+    const toSyncHeight = elToSync.current.scrollHeight;
+    const top = toSyncHeight * percent;
+
+    elToSync.current.scroll({ top });
+  }
 
   insertImage = ({ alt = '', src, filename, position }) => {
     const { input: { value: content, onChange } } = this.props;
@@ -40,13 +68,14 @@ export class Editor extends React.Component {
 
   render() {
     const { render: Render, meta , input } = this.props;
-    const { insertImage, onKeyDown, textareaRef } = this;
+    const { insertImage, onKeyDown, textareaRef, markdownViewerRef } = this;
     const props = {
       input,
       meta,
       insertImage,
       onKeyDown,
       textareaRef,
+      markdownViewerRef,
     };
 
     return <Render {...props} />;
